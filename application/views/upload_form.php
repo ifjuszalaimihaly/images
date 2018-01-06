@@ -4,9 +4,7 @@
 </head>
 <body>
 
-<?php echo $error;?>
-
-<?php echo form_open_multipart('upload/do_upload');?>
+<form action="http://localhost/images/index.php/upload/do_upload" enctype="multipart/form-data" method="post" accept-charset="utf-8">
 
 <input type="file" name="userfile" size="20" />
 
