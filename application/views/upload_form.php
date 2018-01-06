@@ -24,13 +24,34 @@
             var fileData = $('#userfile').prop('files')[0];
             var formData = new FormData();
             formData.append('userfile', fileData);
-            $.ajax({
-                url: 'http://localhost/images/index.php/upload/do_upload',
+            var ajax = $.ajax({
+                url: 'do_upload',
                 data: formData,
                 cache: false,
                 contentType: false,
                 processData: false,
                 type: 'post',
+                xhr: function () {
+                    var xhr = null;
+                    if ( window.ActiveXObject )
+                    {
+                        xhr = new window.ActiveXObject( "Microsoft.XMLHTTP" );
+                    }
+                    else
+                    {
+                        xhr = new window.XMLHttpRequest();
+                    }
+                    xhr.upload.addEventListener( "progress", function ( evt )
+                    {
+                        if ( evt.lengthComputable )
+                        {
+                            var percentComplete = Math.round( (evt.loaded * 100) / evt.total );
+                            //Do something with upload progress
+                            console.log( 'Uploaded percent', percentComplete );
+                        }
+                    }, false );
+                    return xhr;
+                },
                 success: function () {
                     alert('success');
                 },
@@ -38,6 +59,7 @@
                     alert('error');
                 }
             });
+            console.log(ajax);
         }
     );
 </script>
