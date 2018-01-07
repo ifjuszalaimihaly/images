@@ -1,18 +1,29 @@
 <html>
 <head>
     <title>Upload Form</title>
+    <style>
+        .example {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        #userfile {
+            border: 2px dashed #bbb;
+            -moz-border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            padding: 25px;
+            text-align: center;
+            font: 20pt bold;
+            color: #bbb;
+        }
+    </style>
 </head>
 <body>
 
-<form enctype="multipart/form-data" method="post" accept-charset="utf-8">
-
-    <input type="file" name="userfile" id="userfile" size="20"/>
-
-    <br/><br/>
-
-    <input type="button" value="upload" id="upload"/>
-
-</form>
+<div class="example">
+    <div id="userfile">Drop files here</div>
+</div>
 
 <script
         src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -25,7 +36,7 @@
             var formData = new FormData();
             formData.append('userfile', fileData);
             var ajax = $.ajax({
-                url: window.location.href+'/do_upload',
+                url: window.location.href + '/do_upload',
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -33,23 +44,19 @@
                 type: 'post',
                 xhr: function () {
                     var xhr = null;
-                    if ( window.ActiveXObject )
-                    {
-                        xhr = new window.ActiveXObject( "Microsoft.XMLHTTP" );
+                    if (window.ActiveXObject) {
+                        xhr = new window.ActiveXObject("Microsoft.XMLHTTP");
                     }
-                    else
-                    {
+                    else {
                         xhr = new window.XMLHttpRequest();
                     }
-                    xhr.upload.addEventListener( "progress", function ( evt )
-                    {
-                        if ( evt.lengthComputable )
-                        {
-                            var percentComplete = Math.round( (evt.loaded * 100) / evt.total );
+                    xhr.upload.addEventListener("progress", function (evt) {
+                        if (evt.lengthComputable) {
+                            var percentComplete = Math.round((evt.loaded * 100) / evt.total);
                             //Do something with upload progress
-                            console.log( 'Uploaded percent', percentComplete );
+                            console.log('Uploaded percent', percentComplete);
                         }
-                    }, false );
+                    }, false);
                     return xhr;
                 },
                 success: function () {
@@ -63,6 +70,30 @@
             console.log(ajax);
         }
     );
+
+    function handleFileSelect(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+
+        var files = evt.dataTransfer.files; // FileList object.
+        console.log(files.length);
+        // files is a FileList of File objects. List some properties.
+        var output = [];
+        for (var i = 0, f; f = files[i]; i++) {
+            console.log(f);
+        }
+    }
+
+    function handleDragOver(evt) {
+        evt.stopPropagation();
+        evt.preventDefault();
+        evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+    }
+
+    // Setup the dnd listeners.
+    var dropZone = document.getElementById('userfile');
+    dropZone.addEventListener('dragover', handleDragOver, false);
+    dropZone.addEventListener('drop', handleFileSelect, false);
 </script>
 
 </body>
