@@ -25,7 +25,7 @@
             var formData = new FormData();
             formData.append('userfile', fileData);
             var ajax = $.ajax({
-                url: 'do_upload',
+                url: window.location.href+'/do_upload',
                 data: formData,
                 cache: false,
                 contentType: false,
@@ -55,8 +55,9 @@
                 success: function () {
                     alert('success');
                 },
-                error: function () {
+                error: function (result) {
                     alert('error');
+                    console.log(result);
                 }
             });
             console.log(ajax);
