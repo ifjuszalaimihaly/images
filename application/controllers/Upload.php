@@ -20,6 +20,7 @@ class Upload extends CI_Controller {
         $config['max_size']             = 10000;
         $config['max_width']            = 10000;
         $config['max_height']           = 10000;
+        $config['file_name']            = time();
 
         $this->load->library('upload', $config);
         $this->upload->do_upload('file');
@@ -38,6 +39,14 @@ class Upload extends CI_Controller {
             $this->load->view('upload_success', $data);
         }
         */
+    }
+
+    public function list_uploads(){
+        $this->load->helper('directory');
+        $files = directory_map('./uploads/',1);
+        sort($files);
+        echo (json_encode($files));
+
     }
 }
 ?>
