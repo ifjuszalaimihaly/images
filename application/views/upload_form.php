@@ -21,17 +21,26 @@
     </style>
 </head>
 <body>
+<div class="container">
+    <div class="example row">
+        <div id="dropzone">Drop files here</div>
+    </div>
+    <div style="display: none" class="progress row">
+        <div class="progress-bar progress-bar-striped active" role="progressbar"
+             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%; display: none">
+            40%
+        </div>
+    </div>
+    <div class="row gallery"></div>
+    <div class="col-md-4 gallery-item" style="display: none">
+        <div class="thumbnail">
+            <a href="" target="_blank">
+                <img src="" style="width:100%">
 
-<div class="example">
-    <div id="dropzone">Drop files here</div>
-</div>
-<div style="display: none" class="progress">
-    <div class="progress-bar progress-bar-striped active" role="progressbar"
-         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%; display: none">
-        40%
+            </a>
+        </div>
     </div>
 </div>
-
 <script
         src="https://code.jquery.com/jquery-3.2.1.min.js"
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -40,10 +49,12 @@
 <script>
     var progressContainer = $('.progress');
     var progressbar = $('.progress-bar');
+    loadImageList();
+
     function upload(file) {
         var formData = new FormData();
         formData.append('file', file);
-        var ajax = $.ajax({
+        $.ajax({
             url: window.location.href + '/do_upload',
             data: formData,
             cache: false,
@@ -76,8 +87,7 @@
                 showProgress(0);
                 progressContainer.hide();
                 progressbar.hide();
-            },2500);
-            //showProgress(0);
+            }, 2500);
         });
     };
 
@@ -90,9 +100,9 @@
     }
 
     function showProgress(percent) {
-        progressbar.attr('aria-valuenow',percent);
-        progressbar.css('width',percent+'%');
-        progressbar.text(percent+'%')
+        progressbar.attr('aria-valuenow', percent);
+        progressbar.css('width', percent + '%');
+        progressbar.text(percent + '%')
     }
 
     function handleFileSelect(evt) {
@@ -119,6 +129,37 @@
     var dropZone = document.getElementById('dropzone');
     dropZone.addEventListener('dragover', handleDragOver, false);
     dropZone.addEventListener('drop', handleFileSelect, false);
+
+    function loadImageList() {
+        $.ajax({
+            url: window.location.href + '/list_uploads',
+            data: {},
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (result) {
+                console.log('success');
+                var imageList = JSON.parse(result);
+                showImages(imageList);
+            }
+        }).done(function (result) {
+            var imageList = JSON.parse(result);
+            var array = $.map(imageList, function (value, index) {
+                return [value];
+            });
+            showImages(array);
+        });
+    }
+
+    function showImages(imageList) {
+        var src = window.location.origin + '/images/uploads/' + imageList[0];
+        var galleryItem = $('.gallery-item');
+        console.log(galleryItem);
+        galleryItem.find('img').attr('src', src);
+        galleryItem.find('a').attr('href', src);
+        galleryItem.show();
+        $('.gallery').append(galleryItem);
+    }
 </script>
 
 </body>

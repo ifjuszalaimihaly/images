@@ -45,7 +45,7 @@ class Upload extends CI_Controller {
         $this->load->helper('directory');
         $files = directory_map('./uploads/',1);
         sort($files);
-        echo (json_encode($files));
+        echo (json_encode(new ArrayObject($files), JSON_PRETTY_PRINT));
 
     }
 }
