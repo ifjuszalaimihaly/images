@@ -22,7 +22,7 @@ class Upload extends CI_Controller {
         $config['max_height']           = 10000;
 
         $this->load->library('upload', $config);
-        $this->upload->do_upload('userfile');
+        $this->upload->do_upload('file');
 
         /*
         if ( ! $this->upload->do_upload('userfile'))

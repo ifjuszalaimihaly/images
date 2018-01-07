@@ -7,7 +7,7 @@
             border: 1px solid #ccc;
         }
 
-        #userfile {
+        #dropzone {
             border: 2px dashed #bbb;
             -moz-border-radius: 5px;
             -webkit-border-radius: 5px;
@@ -22,7 +22,7 @@
 <body>
 
 <div class="example">
-    <div id="userfile">Drop files here</div>
+    <div id="dropzone">Drop files here</div>
 </div>
 
 <script
@@ -30,46 +30,44 @@
         integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
         crossorigin="anonymous"></script>
 <script>
-    $('#upload').on('click',
-        function () {
-            var fileData = $('#userfile').prop('files')[0];
-            var formData = new FormData();
-            formData.append('userfile', fileData);
-            var ajax = $.ajax({
-                url: window.location.href + '/do_upload',
-                data: formData,
-                cache: false,
-                contentType: false,
-                processData: false,
-                type: 'post',
-                xhr: function () {
-                    var xhr = null;
-                    if (window.ActiveXObject) {
-                        xhr = new window.ActiveXObject("Microsoft.XMLHTTP");
-                    }
-                    else {
-                        xhr = new window.XMLHttpRequest();
-                    }
-                    xhr.upload.addEventListener("progress", function (evt) {
-                        if (evt.lengthComputable) {
-                            var percentComplete = Math.round((evt.loaded * 100) / evt.total);
-                            //Do something with upload progress
-                            console.log('Uploaded percent', percentComplete);
-                        }
-                    }, false);
-                    return xhr;
-                },
-                success: function () {
-                    alert('success');
-                },
-                error: function (result) {
-                    alert('error');
-                    console.log(result);
+
+    function upload(file) {
+        var formData = new FormData();
+        formData.append('file', file);
+        var ajax = $.ajax({
+            url: window.location.href + '/do_upload',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            type: 'post',
+            xhr: function () {
+                var xhr = null;
+                if (window.ActiveXObject) {
+                    xhr = new window.ActiveXObject("Microsoft.XMLHTTP");
                 }
-            });
-            console.log(ajax);
-        }
-    );
+                else {
+                    xhr = new window.XMLHttpRequest();
+                }
+                xhr.upload.addEventListener("progress", function (evt) {
+                    if (evt.lengthComputable) {
+                        var percentComplete = Math.round((evt.loaded * 100) / evt.total);
+                        //Do something with upload progress
+                        console.log('Uploaded percent', percentComplete);
+                    }
+                }, false);
+                return xhr;
+            },
+            success: function () {
+                alert('success');
+            },
+            error: function (result) {
+                alert('error');
+                console.log(result);
+            }
+        });
+        console.log(ajax);
+    };
 
     function handleFileSelect(evt) {
         evt.stopPropagation();
@@ -81,6 +79,7 @@
         var output = [];
         for (var i = 0, f; f = files[i]; i++) {
             console.log(f);
+            upload(f);
         }
     }
 
@@ -91,7 +90,7 @@
     }
 
     // Setup the dnd listeners.
-    var dropZone = document.getElementById('userfile');
+    var dropZone = document.getElementById('dropzone');
     dropZone.addEventListener('dragover', handleDragOver, false);
     dropZone.addEventListener('drop', handleFileSelect, false);
 </script>
