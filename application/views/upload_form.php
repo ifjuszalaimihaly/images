@@ -25,6 +25,12 @@
 <div class="example">
     <div id="dropzone">Drop files here</div>
 </div>
+<div class="progress">
+    <div class="progress-bar progress-bar-striped active" role="progressbar"
+         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+        40%
+    </div>
+</div>
 
 <script
         src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -32,7 +38,10 @@
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
-
+    console.log($('.progress-bar').attr('aria-valuenow'));
+    $('.progress-bar').attr('aria-valuenow',50);
+    $('.progress-bar').css('width','50%');
+    console.log($('.progress-bar').attr('aria-valuenow'));
     function upload(file) {
         var formData = new FormData();
         formData.append('file', file);
