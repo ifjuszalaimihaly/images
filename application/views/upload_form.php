@@ -51,13 +51,7 @@
                 else {
                     xhr = new window.XMLHttpRequest();
                 }
-                xhr.upload.addEventListener("progress", function (evt) {
-                    if (evt.lengthComputable) {
-                        var percentComplete = Math.round((evt.loaded * 100) / evt.total);
-                        //Do something with upload progress
-                        console.log('Uploaded percent', percentComplete);
-                    }
-                }, false);
+                xhr.upload.addEventListener("progress", showProgress, false);
                 return xhr;
             },
             success: function () {
@@ -70,6 +64,14 @@
         });
         console.log(ajax);
     };
+
+    function showProgress(evt) {
+        if (evt.lengthComputable) {
+            var percentComplete = Math.round((evt.loaded * 100) / evt.total);
+            //Do something with upload progress
+            console.log('Uploaded percent', percentComplete);
+        }
+    }
 
     function handleFileSelect(evt) {
         evt.stopPropagation();
