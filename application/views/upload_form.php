@@ -25,9 +25,9 @@
 <div class="example">
     <div id="dropzone">Drop files here</div>
 </div>
-<div class="progress">
+<div style="display: none" class="progress">
     <div class="progress-bar progress-bar-striped active" role="progressbar"
-         aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">
+         aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%; display: none">
         40%
     </div>
 </div>
@@ -38,10 +38,8 @@
         crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script>
-    console.log($('.progress-bar').attr('aria-valuenow'));
-    $('.progress-bar').attr('aria-valuenow',50);
-    $('.progress-bar').css('width','50%');
-    console.log($('.progress-bar').attr('aria-valuenow'));
+    var progressContainer = $('.progress');
+    var progressbar = $('.progress-bar');
     function upload(file) {
         var formData = new FormData();
         formData.append('file', file);
@@ -60,26 +58,41 @@
                 else {
                     xhr = new window.XMLHttpRequest();
                 }
-                xhr.upload.addEventListener("progress", showProgress, false);
+                progressContainer.show();
+                progressbar.show();
+                xhr.upload.addEventListener("progress", countProgress, false);
                 return xhr;
             },
             success: function () {
-                alert('success');
+                //alert('success');
             },
             error: function (result) {
                 alert('error');
                 console.log(result);
             }
+        }).done(function () {
+            console.log('done');
+            setTimeout(function () {
+                showProgress(0);
+                progressContainer.hide();
+                progressbar.hide();
+            },2500);
+            //showProgress(0);
         });
-        console.log(ajax);
     };
 
-    function showProgress(evt) {
+    function countProgress(evt) {
         if (evt.lengthComputable) {
             var percentComplete = Math.round((evt.loaded * 100) / evt.total);
-            //Do something with upload progress
+            showProgress(percentComplete);
             console.log('Uploaded percent', percentComplete);
         }
+    }
+
+    function showProgress(percent) {
+        progressbar.attr('aria-valuenow',percent);
+        progressbar.css('width',percent+'%');
+        progressbar.text(percent+'%')
     }
 
     function handleFileSelect(evt) {
