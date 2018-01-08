@@ -32,7 +32,7 @@ function upload(file) {
             alert('error');
             console.log(result);
         }
-    }).done(function () {
+    }).done(function (reuslt) {
         console.log('done');
         setTimeout(function () {
             showProgress(0);
