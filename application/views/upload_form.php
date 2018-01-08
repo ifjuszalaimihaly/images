@@ -32,14 +32,6 @@
         </div>
     </div>
     <div class="row gallery"></div>
-    <div class="col-md-4 gallery-item" style="display: none">
-        <div class="thumbnail">
-            <a href="" target="_blank">
-                <img src="" style="width:100%">
-
-            </a>
-        </div>
-    </div>
 </div>
 <script
         src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -49,7 +41,7 @@
 <script>
     var progressContainer = $('.progress');
     var progressbar = $('.progress-bar');
-    loadImageList();
+    loadImageList('all');
 
     function upload(file) {
         var formData = new FormData();
@@ -87,6 +79,7 @@
                 showProgress(0);
                 progressContainer.hide();
                 progressbar.hide();
+
             }, 2500);
         });
     };
@@ -130,7 +123,7 @@
     dropZone.addEventListener('dragover', handleDragOver, false);
     dropZone.addEventListener('drop', handleFileSelect, false);
 
-    function loadImageList() {
+    function loadImageList(type) {
         $.ajax({
             url: window.location.href + '/list_uploads',
             data: {},
@@ -139,26 +132,36 @@
             processData: false,
             success: function (result) {
                 console.log('success');
-                var imageList = JSON.parse(result);
-                showImages(imageList);
             }
         }).done(function (result) {
             var imageList = JSON.parse(result);
             var array = $.map(imageList, function (value, index) {
                 return [value];
             });
-            showImages(array);
+            showImages(array,type);
         });
     }
+    
+    function showImage(parent,image) {
+        var src = window.location.origin +'/images/uploads/'+ image;
+        var galleryRow = $('<div class="col-md-4">'+
+            '<div class="thumbnail" >'+
+            '<a href="'+src+'" target="_blank">'+
+            '<img src="'+src+'" style="width:100%">'
+            +'</a>'
+            +'</div>'
+            +'</div>');
+        galleryRow.show();
+        parent.append(galleryRow);
+    }
 
-    function showImages(imageList) {
-        var src = window.location.origin + '/images/uploads/' + imageList[0];
-        var galleryItem = $('.gallery-item');
-        console.log(galleryItem);
-        galleryItem.find('img').attr('src', src);
-        galleryItem.find('a').attr('href', src);
-        galleryItem.show();
-        $('.gallery').append(galleryItem);
+    function showImages(imageList,type) {
+        var gallery = $('.gallery');
+        if(type == 'all') {
+            for (var i = 0; i < imageList.length; i++) {
+                showImage(gallery, imageList[i]);
+            }
+        }
     }
 </script>
 
