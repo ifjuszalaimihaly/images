@@ -25,10 +25,10 @@
     <div class="example row">
         <div id="dropzone">Drop files here</div>
     </div>
+    <input class="" type="file" id="file-input" name="files[]" multiple="">
     <div style="display: none" class="progress row">
         <div class="progress-bar progress-bar-striped active" role="progressbar"
              aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%; display: none">
-            40%
         </div>
     </div>
     <div class="row gallery"></div>
@@ -105,7 +105,6 @@
         var files = evt.dataTransfer.files; // FileList object.
         console.log(files.length);
         // files is a FileList of File objects. List some properties.
-        var output = [];
         for (var i = 0, f; f = files[i]; i++) {
             console.log(f);
             upload(f);
@@ -123,6 +122,17 @@
     dropZone.addEventListener('dragover', handleDragOver, false);
     dropZone.addEventListener('drop', handleFileSelect, false);
 
+    var fileInput = document.getElementById('file-input');
+    fileInput.addEventListener('change',function (ev) {
+       var files = fileInput.files;
+       console.log(files);
+        for (var i = 0, f; f = files[i]; i++) {
+            console.log(f);
+            upload(f);
+        }
+    },false);
+
+
     function loadImageList(type) {
         $.ajax({
             url: window.location.href + '/list_uploads',
@@ -138,32 +148,32 @@
             var array = $.map(imageList, function (value, index) {
                 return [value];
             });
-            showImages(array,type);
+            showImages(array, type);
         });
     }
-    
-    function showImage(parent,image) {
-        var src = window.location.origin +'/images/uploads/'+ image;
-        var galleryRow = $('<div class="col-md-2 col-sm-4 col-xs-6">'+
-            '<div class="thumbnail" >'+
-            '<a href="'+src+'" target="_blank">'+
-            '<img src="'+src+'" style="width:150px; height: 150px">'
-            +'</a>'
-            +'</div>'
-            +'</div>');
+
+    function showImage(parent, image) {
+        var src = window.location.origin + '/images/uploads/' + image;
+        var galleryRow = $('<div class="col-md-2 col-sm-4 col-xs-6">' +
+            '<div class="thumbnail" >' +
+            '<a href="' + src + '" target="_blank">' +
+            '<img src="' + src + '" style="width:150px; height: 150px">'
+            + '</a>'
+            + '</div>'
+            + '</div>');
         galleryRow.show();
         parent.append(galleryRow);
     }
 
-    function showImages(imageList,type) {
+    function showImages(imageList, type) {
         var gallery = $('.gallery');
-        if(type === 'all') {
+        if (type === 'all') {
             for (var i = 0; i < imageList.length; i++) {
                 showImage(gallery, imageList[i]);
             }
         }
-        if(type === 'last'){
-            showImage(gallery, imageList[imageList.length-1]);
+        if (type === 'last') {
+            showImage(gallery, imageList[imageList.length - 1]);
         }
     }
 </script>
