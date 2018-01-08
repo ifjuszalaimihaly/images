@@ -79,7 +79,7 @@
                 showProgress(0);
                 progressContainer.hide();
                 progressbar.hide();
-
+                loadImageList('last');
             }, 2500);
         });
     };
@@ -144,10 +144,10 @@
     
     function showImage(parent,image) {
         var src = window.location.origin +'/images/uploads/'+ image;
-        var galleryRow = $('<div class="col-md-4">'+
+        var galleryRow = $('<div class="col-md-2 col-sm-4 col-xs-6">'+
             '<div class="thumbnail" >'+
             '<a href="'+src+'" target="_blank">'+
-            '<img src="'+src+'" style="width:100%">'
+            '<img src="'+src+'" style="width:150px; height: 150px">'
             +'</a>'
             +'</div>'
             +'</div>');
@@ -157,10 +157,13 @@
 
     function showImages(imageList,type) {
         var gallery = $('.gallery');
-        if(type == 'all') {
+        if(type === 'all') {
             for (var i = 0; i < imageList.length; i++) {
                 showImage(gallery, imageList[i]);
             }
+        }
+        if(type === 'last'){
+            showImage(gallery, imageList[imageList.length-1]);
         }
     }
 </script>
