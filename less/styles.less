@@ -1,1 +1,39 @@
 @import "bootstrap";
+@imageDimension: 150px;
+
+.example {
+  padding: 10px;
+  #dropzone {
+    border: 2px dashed #bbb;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 25px;
+    text-align: center;
+    font: 20pt bold;
+    color: #bbb;
+  }
+  #file-input{
+    margin: auto;
+  }
+}
+.gallery-row{
+  float: none;
+  margin: 0 auto;
+}
+
+.gallery-col{
+  float: end;
+  margin: 0 auto;
+}
+
+.thumbnail {
+  float: right;
+  a {
+    .img-responsive {
+      width: @imageDimension;
+      height: @imageDimension;
+      margin: 0 auto;
+    }
+  }
+}

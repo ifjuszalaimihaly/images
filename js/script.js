@@ -82,14 +82,14 @@ dropZone.addEventListener('dragover', handleDragOver, false);
 dropZone.addEventListener('drop', handleFileSelect, false);
 
 var fileInput = document.getElementById('file-input');
-fileInput.addEventListener('change',function (ev) {
+fileInput.addEventListener('change', function (ev) {
     var files = fileInput.files;
     console.log(files);
     for (var i = 0, f; f = files[i]; i++) {
         console.log(f);
         upload(f);
     }
-},false);
+}, false);
 
 
 function loadImageList(type) {
@@ -113,10 +113,10 @@ function loadImageList(type) {
 
 function showImage(parent, image) {
     var src = window.location.origin + '/images/uploads/' + image;
-    var galleryRow = $('<div class="col-md-2 col-sm-4 col-xs-6">' +
+    var galleryRow = $('<div class="gallery-col col-md-2 col-sm-4 col-xs-6">' +
         '<div class="thumbnail" >' +
         '<a href="' + src + '" target="_blank">' +
-        '<img src="' + src + '" style="width:150px; height: 150px">'
+        '<img class="img-responsive" src="' + src + '">'
         + '</a>'
         + '</div>'
         + '</div>');
@@ -125,7 +125,7 @@ function showImage(parent, image) {
 }
 
 function showImages(imageList, type) {
-    var gallery = $('.gallery');
+    var gallery = $('.gallery-row');
     if (type === 'all') {
         for (var i = 0; i < imageList.length; i++) {
             showImage(gallery, imageList[i]);

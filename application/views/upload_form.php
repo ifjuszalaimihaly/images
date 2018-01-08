@@ -1,27 +1,7 @@
 <html>
 <head>
     <title>Upload Form</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style>
-        .example {
-            padding: 10px;
-            border: 1px solid #ccc;
-        }
-
-        #dropzone {
-            border: 2px dashed #bbb;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            border-radius: 5px;
-            padding: 25px;
-            text-align: center;
-            font: 20pt bold;
-            color: #bbb;
-        }
-        #file-input{
-            margin: auto;
-        }
-    </style>
+    <link rel="stylesheet" href="http://<?php echo(base_url())?>css/styles.min.css">
 </head>
 <body>
 <div class="container">
@@ -35,10 +15,10 @@
              aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%; display: none">
         </div>
     </div>
-    <div class="row gallery"></div>
+    <div class="row gallery-row"></div>
 </div>
-<script src="<?= base_url() ?>/js/jquery-3.2.1.min.js"></script>
-<script src="<?= base_url() ?>/js/script.min.js"></script>
+<script src="http://<?php echo(base_url())?>js/jquery-3.2.1.min.js"></script>
+<script src="http://<?php echo(base_url())?>js/script.min.js"></script>
 
 </body>
 </html>
