@@ -114,7 +114,7 @@ function showImage(parent, image) {
     var galleryRow = $('<div class="col-md-2 col-sm-4 col-xs-6">'+
         '<div class="thumbnail" >'+
         '<a href="'+src+'" target="_blank">'+
-        '<img src="'+src+'" style="width:150px; height: 150px">'
+        '<img class="img-compressed" src="'+src+'" style="width:150px; height: 150px">'
         +'</a>'
         +'</div>'
         +'</div>');
