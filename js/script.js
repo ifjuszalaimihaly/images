@@ -6,7 +6,7 @@ function upload(file) {
     var formData = new FormData();
     formData.append('file', file);
     $.ajax({
-        url: window.location.href + '/do_upload',
+        url: window.location.href + 'index.php/upload/do_upload',
         data: formData,
         cache: false,
         contentType: false,
@@ -27,15 +27,16 @@ function upload(file) {
         }
     }).done(function () {
         setTimeout(function () {
+            console.log('upload timeout')
             showProgress(0);
             progressContainer.hide();
             progressbar.hide();
             loadImageList('last');
         }, 2500);
     }).fail(function () {
-        showError('A feltöltés nem sikerült!');
+        showError('A kép feltöltése nem sikerült');
     });
-};
+}
 
 function countProgress(evt) {
     if (evt.lengthComputable) {
@@ -119,7 +120,7 @@ function loadImageList(type) {
         });
         showImages(array, type);
     }).fail(function () {
-        showError('A kép(ek) beöltése nem sikerült!');
+        showError('A kép(ek) betöltése nem sikerült');
     });
 }
 
