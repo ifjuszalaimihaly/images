@@ -6,7 +6,7 @@
 <body>
 <div class="container">
     <div class="upload-file row">
-        <div id="dropzone">Húzza ide a fájt!
+        <div id="dropzone"><h2>Húzza ide a fájt!</h2>
             <input class="" type="file" id="file-input">
         </div>
     </div>
