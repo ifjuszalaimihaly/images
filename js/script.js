@@ -62,7 +62,9 @@ function handleFileSelect(evt) {
     evt.preventDefault();
 
     var files = evt.dataTransfer.files; // FileList object.
-    console.log(files.length);
+    if(files.length>1){
+        alert('too many files');
+    }
     // files is a FileList of File objects. List some properties.
     for (var i = 0, f; f = files[i]; i++) {
         console.log(f);
@@ -84,11 +86,7 @@ dropZone.addEventListener('drop', handleFileSelect, false);
 var fileInput = document.getElementById('file-input');
 fileInput.addEventListener('change', function (ev) {
     var files = fileInput.files;
-    console.log(files);
-    for (var i = 0, f; f = files[i]; i++) {
-        console.log(f);
-        upload(f);
-    }
+    upload(files[0]);
 }, false);
 
 
@@ -114,11 +112,9 @@ function loadImageList(type) {
 function showImage(parent, image) {
     var src = window.location.origin + '/images/uploads/' + image;
     var galleryRow = $('<div class="gallery-col col-md-2 col-sm-4 col-xs-6">' +
-        '<div class="thumbnail" >' +
         '<a href="' + src + '" target="_blank">' +
         '<img class="img-responsive" src="' + src + '">'
         + '</a>'
-        + '</div>'
         + '</div>');
     galleryRow.show();
     parent.append(galleryRow);

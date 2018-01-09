@@ -6,8 +6,13 @@
 <body>
 <div class="container">
     <div class="example row">
-        <div id="dropzone">Húzza ide a fájlokat
-            <input class="" type="file" id="file-input" text="Select files" name="files[]">
+        <div id="dropzone">Húzza ide a fájt
+            <input class="" type="file" id="file-input" text="Select files">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-sm-4 col-sm-offset-4 col-xs-2 col-xs-offset-5 bg-danger align-center" id="error-message">
+            error
         </div>
     </div>
     <div style="display: none" class="progress row">
