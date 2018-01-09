@@ -111,11 +111,13 @@ function loadImageList(type) {
 
 function showImage(parent, image) {
     var src = window.location.origin + '/images/uploads/' + image;
-    var galleryRow = $('<div class="gallery-col col-md-2 col-sm-4 col-xs-6">' +
-        '<a href="' + src + '" target="_blank">' +
-        '<img class="img-responsive" src="' + src + '">'
-        + '</a>'
-        + '</div>');
+    var galleryRow = $('<div class="col-md-2 col-sm-4 col-xs-6">'+
+        '<div class="thumbnail" >'+
+        '<a href="'+src+'" target="_blank">'+
+        '<img src="'+src+'" style="width:150px; height: 150px">'
+        +'</a>'
+        +'</div>'
+        +'</div>');
     galleryRow.show();
     parent.append(galleryRow);
 }
