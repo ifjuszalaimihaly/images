@@ -11,7 +11,7 @@ function upload(file) {
     var formData = new FormData();
     formData.append('file', file);
     //Denied upload when one another is in progress
-    $('.upload-file').hide()
+    $('.upload-file').hide();
     $.ajax({
         url: window.location.href + 'index.php/upload/do_upload',
         data: formData,
@@ -98,7 +98,7 @@ function checkFiles(files) {
     if (validateFileExtension(files[0])) {
         upload(files[0]);
     } else {
-        showError('Nem megfeleő kép formátum, csak kép feltöltése lehetséges!');
+        showError('Nem megfelelő fájl formátum, csak kép vagy mp3 feltöltése lehetséges!');
     }
 }
 
@@ -117,7 +117,7 @@ function validateFileExtension(file) {
     var filename = file.name.toLowerCase();
     console.log(filename);
     if (filename.endsWith('.gif') || filename.endsWith('.jpg')
-        || filename.endsWith('.jpeg') || filename.endsWith('.png')) {
+        || filename.endsWith('.jpeg') || filename.endsWith('.png') || filename.endsWith('.mp3')) {
         return true;
     }
     return false;
@@ -154,7 +154,10 @@ function loadImageList(type) {
 
 //Append an image to gallery, and show it.
 function showImage(parent, image) {
-    var src = window.location.href + '/uploads/' + image;
+	var src = window.location.href + '/uploads/' + image;
+	if(image.endsWith(".mp3")){
+		src =  window.location.href + "/images/mp3.png"
+	}
     var galleryRow = $('<div class="col-md-2 col-sm-4 col-xs-6">' +
         '<div class="thumbnail" >' +
         '<a href="' + src + '" target="_blank">' +
